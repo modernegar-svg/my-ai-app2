@@ -241,5 +241,7 @@ def main(page: ft.Page):
     )
 
 
+# Безопасный запуск: на ПК запустит ft.app, на мобилке не вызовет ошибку отсутствия атрибута
 if __name__ == "__main__":
-    ft.app(target=main)
+    if hasattr(ft, "app"):
+        ft.app(target=main)
