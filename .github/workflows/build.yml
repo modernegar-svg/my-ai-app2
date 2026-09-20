@@ -16,11 +16,18 @@ jobs:
         with:
           python-version: '3.10'
 
-      - name: Set up Java (Required for Android build)
+      - name: Set up Java
         uses: actions/setup-java@v4
         with:
           distribution: 'zulu'
           java-version: '17'
+
+      - name: Install Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.24.3' # Версия, совместимая с Flet
+          channel: 'stable'
+          cache: true
 
       - name: Install dependencies
         run: |
@@ -29,7 +36,9 @@ jobs:
           pip install flet
 
       - name: Build Flet APK
-        run: flet build apk
+        run: flet build apk --yes
+        env:
+          FLET_FORCE_BUILD: "true"
 
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
